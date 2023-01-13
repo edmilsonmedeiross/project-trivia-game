@@ -28,6 +28,7 @@ class Login extends Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     const { history, dispatch } = this.props;
+    console.log(this.props);
     const { name, email } = this.state;
     const { token } = await fetchToken();
     dispatch(login(name, email));
