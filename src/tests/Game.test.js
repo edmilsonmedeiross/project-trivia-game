@@ -38,8 +38,15 @@ describe('Testes de cobertura da tela de Jogo', () => {
             json: jest.fn().mockResolvedValue(errorResponse)
         })
         await waitFor(() => {
-            expect(history.location.pathname).toBe('/')
+            expect(history.location.pathname).toBe('/');
         })
+    })
+    it('Verifica introdução da página', () => {
+        const logoGame = screen.getByAltText(/logo/);
+        const yourTurn = screen.getByText(/sua vez/i);
+
+        expect(logoGame).toBeInTheDocument();
+        expect(yourTurn).toBeInTheDocument();
     })
     it('Página contém informações relacionadas à pergunta', async () => {
         const questionCategory = await screen.findByTestId('question-category');
@@ -50,7 +57,7 @@ describe('Testes de cobertura da tela de Jogo', () => {
   
       const playerName = screen.getByTestId('header-player-name');
       const scoreboard = screen.getByTestId('header-score');
-      const imgAvatar = screen.getByRole('img');
+      const imgAvatar = screen.getByTestId('header-profile-picture');
       
       expect(playerName).toBeInTheDocument();
       expect(scoreboard).toBeInTheDocument();
@@ -59,8 +66,13 @@ describe('Testes de cobertura da tela de Jogo', () => {
     it('Ao clicar na resposta correta, o botão fica verde.', () => {
       const correctAnswer = document.getElementById('correct-answer');
       userEvent.click(correctAnswer);
-      expect(correctAnswer).toHaveStyle('color: green');
+      expect(correctAnswer).toHaveClass('.green-border');
     })
+    it('Ao clicar na resposta incorreta, os botões ficam vermelhos.', () => {
+        const correctAnswer = document.getElementById('correct-answer');
+        userEvent.click(correctAnswer);
+        expect(correctAnswer).toHaveClass('.red-border');
+      })
     it('Score é atualizado ao clicar na resposta correta', async () => {
         const correctAnswer = await screen.findByTestId('correct-answer');
         userEvent.click(correctAnswer);
@@ -75,7 +87,7 @@ describe('Testes de cobertura da tela de Jogo', () => {
     })
     it('Próxima pergunta é exibida ao clicar no botão next e o score atualiza corretamente e direciona para a página de feedbacks', async () => {
         const correctAnswer = await screen.findByTestId('correct-answer');
-        const currentQuestion = screen.getByTestId('current-question')
+        const currentQuestion = screen.getByTestId('current-question');
 
         expect(currentQuestion).toHaveTextContent('1');
         userEvent.click(correctAnswer);
@@ -85,13 +97,15 @@ describe('Testes de cobertura da tela de Jogo', () => {
 
         const newQuestion = await screen.findByTestId('question-text');
         expect(currentQuestion).toHaveTextContent('2');
-        expect(newQuestion).toHaveTextContent('What is the fifth largest country by area?')
+        expect(newQuestion).toHaveTextContent('What is the fifth largest country by area?');
 
         const score = await screen.findByTestId('header-score');
         expect(score).toHaveTextContent('120');
         
         const feedbackText = await screen.findByTestId('feedback-text');
         expect(feedbackText).toBeInTheDocument();
+
+        await waitFor(() => expect(feedbackText).toHaveBeenCalled());
     })
     it('Verifica se a página contém timer', async () => {
         await waitFor(() => {
