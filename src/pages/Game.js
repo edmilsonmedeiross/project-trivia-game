@@ -64,9 +64,9 @@ class Game extends Component {
   }
 
   componentDidUpdate(_, prevState) {
-    const { questions, turn, timer } = this.state;
+    const { questions, turn } = this.state;
     const { correct_answer: correct, incorrect_answers: incorrect } = questions[turn];
-    console.log(timer);
+
     if (prevState.turn !== turn) {
       this.setState({
         randomAnswers: this.randomize(correct, incorrect),
@@ -156,7 +156,7 @@ class Game extends Component {
   };
 
   handleClickReveal = (answer) => {
-    console.log(answer);
+    // console.log(answer);
     const { dispatch } = this.props;
     const { questions, turn, timer } = this.state;
     this.setState({ reveal: true }, () => {

@@ -40,7 +40,7 @@ export class Timer extends Component {
 
   render() {
     const { counter } = this.state;
-    return <div>{counter}</div>;
+    return <div data-testid="timer">{counter}</div>;
   }
 }
 
