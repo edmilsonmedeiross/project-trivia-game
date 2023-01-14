@@ -9,7 +9,6 @@ import { saveScore } from '../redux/actions';
 const RANDOM = 0.5;
 const ERROR = 3;
 const INDEX = { count: -1 };
-const SECOND = 1000;
 const MAXTURN = 4;
 const POINTS = 10;
 const DIFFICULTY = {
@@ -32,7 +31,6 @@ class Game extends Component {
     randomAnswers: [],
     timer: 10,
     turn: 0,
-    score: 0,
     reveal: false,
     token: '',
     isTimeOut: false,
@@ -59,8 +57,6 @@ class Game extends Component {
       randomAnswers: this.randomize(correct, incorrect),
       token,
     });
-
-    this.callTimer();
   }
 
   componentDidUpdate(_, prevState) {
@@ -87,15 +83,6 @@ class Game extends Component {
   handleIndex = () => {
     INDEX.count += 1;
     return INDEX.count;
-  };
-
-  callTimer = () => {
-    this.intervalId = setInterval(() => {
-      this.setState((prevState) => ({
-        ...prevState,
-        timer: prevState.timer - 1,
-      }));
-    }, SECOND);
   };
 
   handleReveal = (answer) => {

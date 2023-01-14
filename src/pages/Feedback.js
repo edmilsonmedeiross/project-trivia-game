@@ -19,7 +19,6 @@ class Feedback extends Component {
 
   render() {
     const { name, score, gravatarImage, assertions } = this.props;
-    // console.log(assertions);
 
     return (
       <section className="App-section">
