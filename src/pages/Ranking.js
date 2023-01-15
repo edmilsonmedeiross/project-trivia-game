@@ -29,7 +29,7 @@ class Ranking extends Component {
   render() {
     const { listGravatar } = this.state;
     return (
-      <main>
+      <main className="App-section">
         <section>
           <h1 data-testid="ranking-title">Ranking</h1>
           <ol>
